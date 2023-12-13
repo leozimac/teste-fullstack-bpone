@@ -1,0 +1,41 @@
+version: '3.4'
+
+volumes:
+  postgre_vol:
+
+networks:
+  app:
+
+services:
+  lecommerceapi:
+    image: leocorrea/lecommerce-api:v1
+    networks:
+      - app
+    environment:
+      - DB_HOST=postgresql
+      - DB_NAME=lecommerce
+      - DB_ROOT_PASSWORD=@prod357
+      - FRONT_HOST=webapp
+    ports:
+      - 5295:8080
+    
+  webapp:
+    image: leocorrea/lecommerce-webapp:v1
+    ports:
+      - 5500:80
+    networks:
+        - app
+
+  postgresql:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=@prod357
+      - POSTGRES_DB=lecommerce
+    ports:
+      - 5432:5432
+    networks:
+      - app
+    volumes:
+      - postgre_vol:/data/db
+      - ./db/initial_create.sql:/docker-entrypoint-initdb.d/initial_create.sql
