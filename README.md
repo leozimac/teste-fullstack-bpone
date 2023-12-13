@@ -31,7 +31,7 @@ Ou
 
 O front estará executando no endereço http://localhost:5500/
 
-![frontend](/img/frontend.png)
+![frontend](/img/angularjs.png)
 
 E a API no endereço http://localhost:5295/swagger/index.html
 
