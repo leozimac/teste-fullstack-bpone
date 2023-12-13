@@ -1,0 +1,52 @@
+<div class="container mt-4" ng-controller="detalheClienteCtrl">
+    <div class="row">
+        <h4 class="card-title">Detalhes do Cliente</h4>
+        <div ui-alert title="Ops, aconteceu um erro!" ng-if="showErrorMessage">
+            {{error}}
+        </div>
+    </div>
+    <div class="row mt-3 mb-4">
+        <div class="col col-5">
+            <form name="clienteForm">
+                <div class="mb-3">
+                    <label for="nome">Id</label>
+                    <input class="form-control" type="text" ng-model="cliente.id" name="id" placeholder="id" ng-required="true" ng-disabled="true"/>
+                </div>
+                <div class="mb-3">
+                    <label for="nome">Nome</label>
+                    <input class="form-control" type="text" ng-model="cliente.name" name="nome" placeholder="Nome" ng-required="true" ng-minLength="3"/>
+                </div>
+
+                <div ng-show="cliente.cpf != ''">
+                    <label for="cpf">CPF</label>
+                    <input ng-if="cliente.cpf != ''" class="form-control" type="text" ng-model="cliente.cpf" name="cpf" placeholder="CPF" ng-required="cpfRequired" ui-cpf/>
+                </div>
+                
+                <div ng-show="cliente.cnpj != ''">
+                    <label for="cnpj">CNPJ</label>
+                    <input ng-if="cliente.cnpj != ''" class="form-control" type="text" ng-model="cliente.cnpj" name="cnpj" placeholder="CNPJ" ng-required="cnjpRequired" ui-cnpj/>
+                </div>
+            </form>
+        </div>
+        <div class="row mt-3 mb-4">
+            <div class="col col-5">
+                <div ng-show="clienteForm.nome.$dirty" ng-messages="clienteForm.nome.$error">
+                    <div ng-message="required" class="alert alert-danger">
+                        Por favor, preencha o campo nome!
+                    </div>
+                    <div ng-message="minlength" class="alert alert-danger">
+                        O campo nome deve ter no mínimo 3 caracteres.
+                    </div>
+                </div>
+                <div ng-show="clienteForm.cpf.$error.required" class="alert alert-danger">
+                    Por favor, preencha o campo CPF!
+                </div>
+                <div ng-show="clienteForm.cnpj.$error.required" class="alert alert-danger">
+                    Por favor, preencha o campo CNPJ!
+                </div>
+                <a class="btn btn-primary" href="#!/clientes">Voltar</a>
+                <button class="btn btn-warning btn-block" ng-click="updateCliente(cliente)" ng-disabled="clienteForm.$invalid">Atualizar Cliente</button>
+            </div>
+        </div>
+    </div>
+</div>

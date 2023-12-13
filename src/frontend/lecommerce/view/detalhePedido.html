@@ -1,0 +1,27 @@
+<div class="container-fluid mt-4" ng-controller="detalhesPedidoCtrl">
+    <div class="row mt-3 mb-4">
+      <h5 class="card-title">Detalhes do pedido</h5>
+    </div>
+    <table class="table table-striped">
+      <tr>
+          <th>Id</th>
+          <th>Código</th>
+          <th>Cliente</th>
+          <th>Data</th>
+          <th>Produto</th>
+          <th>Preco Produto</th>
+          <th>Quantidade Produto</th>
+      </tr>
+      <tr>
+          <td>{{pedido.id}}</td>
+          <td>{{pedido.code}}</td>
+          <td>{{pedido.client}}</td>
+          <td>{{pedido.date | date:"dd/MM/yyyy HH:mm"}}</td>
+          <td>{{pedido.items[0].product}}</td>
+          <td>{{pedido.items[0].price | currency:"R$":2}}</td>
+          <td>{{pedido.items[0].quantity}}</td>
+      </tr>
+    </table>
+    <p class="fw-bold">Total do pedido: {{pedido.total | currency:"R$":2}}</p>
+    <a class="btn btn-primary" href="#!/pedidos">Voltar</a>
+  </div>

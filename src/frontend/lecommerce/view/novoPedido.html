@@ -1,0 +1,34 @@
+<div class="container mt-4" ng-controller="novoPedidoCtrl">
+    <div class="row">
+        <h4 class="card-title">Novo Pedido</h4>
+        <div ui-alert title="Ops, aconteceu um erro!" ng-if="showErrorMessage">
+            {{error}}
+        </div>
+    </div>
+    <div class="row mt-3 mb-4">
+        <div class="col col-5">
+            <form name="pedidoForm">
+                <select class="form-control mb-2" ng-model="pedido.cliente" name="cliente" ng-options="cliente.id as cliente.name for cliente in clientes" ng-required="true">
+                    <option value="">Selecione um cliente</option>
+                </select>
+                <select class="form-control mb-2" ng-model="pedido.produto" name="produto" ng-options="produto as produto.name + ' ( ' + (produto.price | currency:'R$':2) + ' )' for produto in produtos" ng-required="true">
+                    <option value="">Selecione um produto</option>
+                </select>
+                <input class="form-control mb-3" type="number" ng-model="pedido.quantidade" name="quantidade" placeholder="Quantidade do produto" ng-keyup="addTotal(pedido.produto, pedido.quantidade)" ui-integer ng-required="true"/>
+            </form>
+
+            <p>Total do pedido: {{total | currency:"R$":2}}</p>
+
+            <div ng-show="pedidoForm.cliente.$error.required && pedidoForm.cliente.$dirty" class="alert alert-danger">
+                Por favor, preencha o campo cliente!
+            </div>
+            <div ng-show="pedidoForm.produto.$error.required && pedidoForm.produto.$dirty" class="alert alert-danger">
+                Por favor, preencha o campo produto!
+            </div>
+            <div ng-show="pedidoForm.quantidade.$error.required && pedidoForm.quantidade.$dirty" class="alert alert-danger">
+                Por favor, preencha o campo quantidade!
+            </div>
+            <button class="btn btn-primary btn-block" ng-click="adicionarPedido(pedido)" ng-disabled="pedidoForm.$invalid">Adicionar Pedido</button>
+        </div>
+    </div>
+</div>

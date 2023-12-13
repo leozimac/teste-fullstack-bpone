@@ -1,0 +1,36 @@
+<div class="container mt-4" ng-controller="novoProdutoCtrl">
+    <div class="row">
+        <h4 class="card-title">Novo Produto</h4>
+        <div ui-alert title="Ops, aconteceu um erro!" ng-if="showErrorMessage">
+            {{error}}
+        </div>
+    </div>
+    <div class="row mt-3 mb-4">
+        <div class="col col-5">
+            <form name="produtoForm">
+                <input class="form-control" type="text" ng-model="produto.nome" name="nome" placeholder="Nome do produto" ng-required="true" ng-minLength="3"/>
+                <input class="form-control mt-2" type="number" ng-model="produto.codigo" name="codigo" placeholder="Código" ng-required="true"/>
+                <input class="form-control mt-2" type="number" ng-model="produto.preco" name="preco" placeholder="Preço" ng-required="true"/>
+            </form>
+        </div>
+    </div>
+    <div class="row mt-3 mb-4">
+        <div class="col col-5">
+            <div ng-show="produtoForm.nome.$dirty" ng-messages="produtoForm.nome.$error">
+                <div ng-message="required" class="alert alert-danger">
+                    Por favor, preencha o campo nome do produto!
+                </div>
+                <div ng-message="minlength" class="alert alert-danger">
+                    O nome do produto deve ter no mínimo 3 caracteres.
+                </div>
+            </div>
+            <div ng-show="produtoForm.codigo.$error.required && produtoForm.codigo.$dirty" class="alert alert-danger">
+                Por favor, preencha o campo código!
+            </div>
+            <div ng-show="produtoForm.preco.$error.required && produtoForm.preco.$dirty" class="alert alert-danger">
+                Por favor, preencha o campo preço!
+            </div>
+            <button class="btn btn-primary btn-block" ng-click="adicionarProduto(produto)" ng-disabled="produtoForm.$invalid">Adicionar Produto</button>
+        </div>
+    </div>
+</div>

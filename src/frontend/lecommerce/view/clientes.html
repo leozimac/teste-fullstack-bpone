@@ -1,0 +1,31 @@
+<div class="card w-75" ng-controller="clientesCtrl">
+    <div class="card-body">
+        <h4 class="card-title">Clientes</h4>
+        <div ui-alert title="Ops, aconteceu um erro!" ng-if="showErrorMessage">
+            {{error}}
+        </div>
+        <div class="d-flex flex-row-reverse mb-2">
+            <a class="btn btn-primary" href="#!/novoCliente">Novo Cliente</a>
+        </div>
+        <hr>
+        <input class="form-control mb-2" type="text" ng-model="criterioDeBusca" placeholder="Busque pelo nome, ou cpf, ou cnpj"/>
+        <table class="table table-striped">
+            <tr>
+                <th>Nome</th>
+                <th>Documento</th>
+                <th>Ações</th>
+            </tr>
+            <tr ng-repeat="cliente in clientes | filter:criterioDeBusca">
+                <td>{{cliente.name}}</td>
+                <td ng-if="cliente.cpf">{{cliente.cpf | cpf}}</td>
+                <td ng-if="cliente.cnpj">{{cliente.cnpj | cnpj}}</td>
+                <td>
+                    <div class="">
+                        <a class="btn btn-primary btn-sm" href="#!/detalhesCliente/{{cliente.id}}">Detalhes</a>
+                        <button class="btn btn-danger btn-sm" ng-click="removerCliente(cliente.id)">Remover</button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

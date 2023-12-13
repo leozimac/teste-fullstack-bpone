@@ -1,0 +1,44 @@
+<div class="container mt-4" ng-controller="novoClienteCtrl">
+    <div class="row">
+        <h4 class="card-title">Novo Cliente</h4>
+        <div ui-alert title="Ops, aconteceu um erro!" ng-if="showErrorMessage">
+            {{error}}
+        </div>
+    </div>
+    <div class="row mt-3 mb-4">
+        <div class="col col-5">
+            <form name="clienteForm">
+                <input class="form-control" type="text" ng-model="cliente.nome" name="nome" placeholder="Nome" ng-required="true" ng-minLength="3"/>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="tipoPessoa" id="tipoPF" ng-click="setTipoPessoa('pf')" checked/>
+                    <label class="form-check-label" for="tipoPF">Pessoa Física</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="tipoPessoa" id="tipoPJ" ng-click="setTipoPessoa('pj')"/>
+                    <label class="form-check-label" for="tipoPJ">Pessoa Jurídica</label>
+                </div>
+                <input ng-if="tipoPessoa == 0" class="form-control" type="text" ng-model="cliente.cpf" name="cpf" placeholder="CPF" ng-required="cpfRequired" ui-cpf/>
+                <input ng-if="tipoPessoa == 1" class="form-control" type="text" ng-model="cliente.cnpj" name="cnpj" placeholder="CNPJ" ng-required="cnjpRequired" ui-cnpj/>
+            </form>
+        </div>
+        <div class="row mt-3 mb-4">
+            <div class="col col-5">
+                <div ng-show="clienteForm.nome.$dirty" ng-messages="clienteForm.nome.$error">
+                    <div ng-message="required" class="alert alert-danger">
+                        Por favor, preencha o campo nome!
+                    </div>
+                    <div ng-message="minlength" class="alert alert-danger">
+                        O campo nome deve ter no mínimo 3 caracteres.
+                    </div>
+                </div>
+                <div ng-show="clienteForm.cpf.$error.required" class="alert alert-danger">
+                    Por favor, preencha o campo CPF!
+                </div>
+                <div ng-show="clienteForm.cnpj.$error.required" class="alert alert-danger">
+                    Por favor, preencha o campo CNPJ!
+                </div>
+                <button class="btn btn-primary btn-block" ng-click="adicionarCliente(cliente)" ng-disabled="clienteForm.$invalid">Adicionar Cliente</button>
+            </div>
+        </div>
+    </div>
+</div>
